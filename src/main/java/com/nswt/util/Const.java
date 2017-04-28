@@ -3,7 +3,7 @@ package com.nswt.util;
 import org.springframework.context.ApplicationContext;
 /**
  * 项目名称：
- * @author:fh qq313596790[青苔]
+ * @author:  admin
  * 修改日期：2015/11/2
 */
 public class Const {
