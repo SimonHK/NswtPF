@@ -68,51 +68,10 @@ public class Config {
                 configMap.put("System.FileSeparator", System.getProperty("file.separator"));
                 configMap.put("System.FileEncoding", System.getProperty("file.encoding"));
 
-                ConfigLoader.NodeData[] datas = ConfigLoader.getNodeDataList("framework.application.config");
-                if (datas == null) {
-                    LogUtil.warn("配置文件framework.xml未找到!");
-                    isInstalled = false;
-                    return;
-                }
-                for (int i = 0; datas != null && i < datas.length; i++) {
-                    configMap.put("App." + datas[i].Attributes.getString("name"), datas[i].Body);
-                }
-                if (configMap.containsKey("App.Code")) {
-                    AppCode = configMap.getString("App.Code");
-                    AppName = configMap.getString("App.Name");
-                }
-                datas = ConfigLoader.getNodeDataList("nswtp.allowUploadExt.config");
-                for (int i = 0; datas != null && i < datas.length; i++) {
-                    configMap.put(datas[i].Attributes.getString("name"), datas[i].Body);
-                }
-                datas = ConfigLoader.getNodeDataList("data.config");
-                for (int i = 0; datas != null && i < datas.length; i++) {
-                    configMap.put(datas[i].Attributes.getString("name"), datas[i].Attributes.getString("value"));
-                }
-                datas = ConfigLoader.getNodeDataList("framework.databases.database");
-                /*for (int i = 0; datas != null && i < datas.length; i++) {
-                    String dbname = datas[i].Attributes.getString("name");
-                    ConfigLoader.NodeData[] children = datas[i].getChildrenDataList();
-                    for (int k = 0; k < children.length; k++) {
-                        String attr = children[k].Attributes.getString("name");
-                        String value = children[k].getBody();
-                        if (attr.equalsIgnoreCase("Password")) {
-                            if (value.startsWith("$KEY")) {
-                                value = EncryptUtil.decrypt3DES(value.substring(4), EncryptUtil.DEFAULT_KEY);
-                            }
-                        }
-                        configMap.put("Database." + dbname + "." + attr, value);
-                    }
-                }
-                if (datas != null) {
-                    isInstalled = true;
-                } else {
-                    isInstalled = false;
-                }*/
-                loadDBConfig();
+                //loadDBConfig();
                /* ExtendManager.executeAll("Config.AfterInit", null);*/
             } else {
-                loadDBConfig();
+                //loadDBConfig();
             }
         }
     }
@@ -236,9 +195,9 @@ public class Config {
     /**
      * 考虑到同一个应用在内外网有不同的路径的情况，该处变量在每一次进入Filter后都会重新设置
      */
-    public static String getContextPath() {
+  /*  public static String getContextPath() {
         return Config.getValue("App.ContextPath");
-        /*if (ComplexDepolyMode) {
+        *//*if (ComplexDepolyMode) {
             String path = (String) User.getValue("App.ContextPath");
             if (StringUtil.isEmpty(path)) {
                 path = Config.getValue("App.ContextPath");
@@ -246,8 +205,8 @@ public class Config {
             return path;
         } else {
             return Config.getValue("App.ContextPath");
-        }*/
-    }
+        }*//*
+    }*/
 
     /**
      * 获取日志级别
@@ -598,11 +557,4 @@ public class Config {
         return "Debug".equalsIgnoreCase(Config.getLogLevel());
     }
 
-    public static String getLoginPage() {
-        String str = configMap.getString("App.LoginPage");
-        if (StringUtil.isNotEmpty(str)) {// 可能是没有配置文件
-            return str;
-        }
-        return "Login.jsp";
-    }
 }

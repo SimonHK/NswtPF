@@ -1,5 +1,7 @@
 package com.nswt.controller.system.createcode;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +12,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nswt.entity.system.Menu;
+import com.nswt.service.system.fhlog.FHlogManager;
+import com.nswt.service.system.menu.MenuManager;
 import com.nswt.util.*;
+import com.nswt.util.config.Config;
+import com.nswt.util.maven.MavenUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nswt.controller.base.BaseController;
 import com.nswt.entity.Page;
 import com.nswt.service.system.createcode.CreateCodeManager;
+
+import static com.nswt.util.PropValuesUtil.getPprVue;
 
 /** 
  * 类名称： 代码生成器
@@ -33,7 +42,11 @@ public class CreateCodeController extends BaseController {
 	String menuUrl = "createcode/list.do"; //菜单地址(权限用)
 	@Resource(name="createcodeService")
 	private CreateCodeManager createcodeService;
-	
+	@Resource(name="menuService")
+	private MenuManager menuService;
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
+
 	/**列表
 	 * @param page
 	 * @return
@@ -140,10 +153,8 @@ public class CreateCodeController extends BaseController {
 		}else if("sontable".equals(FHTYPE)){
 			ftlPath = "createSoCode";	//明细表
 		}
-		String copytosrcpath = "/Users/lijinyan/MyWork/ZYZH/GeneWisdomPlatForm/src/main/java/com/nswt";
-		String copytoresource ="/Users/lijinyan/MyWork/ZYZH/GeneWisdomPlatForm/src/main/resources";
-		String copytojsppath = "/Users/lijinyan/MyWork/ZYZH/GeneWisdomPlatForm/src/main/webapp/WEB-INF/jsp";
 
+		/*=============================================代码生成=============================================*/
 		/*生成controller*/
 		Freemarker.printFile("controllerTemplate.ftl", root, "controller/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName+"Controller.java", filePath, ftlPath);
 		/*生成service*/
@@ -162,19 +173,54 @@ public class CreateCodeController extends BaseController {
 		Freemarker.printFile("jsp_list_Template.ftl", root, "jsp/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName.toLowerCase()+"_list.jsp", filePath, ftlPath);
 		Freemarker.printFile("jsp_edit_Template.ftl", root, "jsp/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName.toLowerCase()+"_edit.jsp", filePath, ftlPath);
 		/*生成说明文档*/
+		/*===========================================代码生成完毕=============================================*/
 
+		/*=================================依据生成sql创建数据库表=============================================*/
+		String dbtype =   getPprVue("dbfh.properties").getProperty("dbtype");
+		String sqlfilepath = getPprVue("autocreate.properties").getProperty("project_web")+"/"+filePath;
+		if ("mysql".equals(dbtype)){sqlfilepath+="mysql数据库脚本/";}
+		if ("oracle".equals(dbtype)){sqlfilepath+="oracle数据库脚本/";}
+		if ("sqlserver".equals(dbtype)){sqlfilepath+="sqlserver数据库脚本/";}
+		String sqlfilename = sqlfilepath+tabletop+objectName.toUpperCase()+".sql";
+		DbFH dbFH = new DbFH();
+		String reCreateMessage = dbFH.recover(faobject,sqlfilename).toString();
+		/*=============================================创建完毕==============================================*/
 
+		/*=============================================拷贝生成代码入开发目录中待编译===========================*/
+		String projectwebpath = getPprVue("autocreate.properties").getProperty("project_web"); //===获取开发web目录
+		String sourcepath = getPprVue("autocreate.properties").getProperty("project_source");  //===获取开发source目录
+		String javasource = sourcepath+"/java";
+		String resourcespath = sourcepath+"/resources";
+		String webapppath =  sourcepath+"/webapp";
+		String controllersource = javasource+"/com/nswt/controller/";								    //===控制层代码路径
+		String servicesource = javasource+"/com/nswt/service/";											//===服务层代码路径
+		String mybatissource = resourcespath+"/mybatis/";												//===mybatis代码路径
+		String jspsource = webapppath+"/WEB-INF/jsp/";													//===页面路径
 		/*拷贝controller到工程目录下*/
-		//FileUtil.copyDir(new File(PathUtil.getClasspath()+filePath+"controller/"),copytosrcpath+"/controller/");
+		FileUtil.copyDir(new File(projectwebpath+"/"+filePath+"controller/"),controllersource);
 		/*拷贝service到工程目录下*/
-		//FileUtil.copyDir(new File(PathUtil.getClasspath()+filePath+"service/"),copytosrcpath+"/service/");
+		FileUtil.copyDir(new File(projectwebpath+"/"+filePath+"service/"),servicesource);
 		/*拷贝mybatis xml 到工程目录下*/
-		//FileUtil.copyDir(new File(PathUtil.getClasspath()+filePath+"mybatis_mysql/"),copytoresource+"/mybatis/");
+		FileUtil.copyDir(new File(projectwebpath+"/"+filePath+"mybatis_mysql/"),mybatissource);
 		/*拷贝JSP 到工程目录下*/
-		//FileUtil.copyDir(new File(PathUtil.getClasspath()+filePath+"jsp/"),copytojsppath+"/jsp/");
+		FileUtil.copyDir(new File(projectwebpath+"/"+filePath+"jsp/"),jspsource);
+		/*=============================================拷贝完成=============================================*/
 
+		/*========================创建菜单=======================*/
+		String menuurl = objectName.toLowerCase()+"/list.do";
+		Menu menu = new Menu();
+		menu.setMENU_NAME(TITLE);
+		menu.setMENU_URL(menuurl);
+		menu.setPARENT_ID("67");
+		menu.setMENU_ORDER("99");
+		menu.setMENU_TYPE("1");
+		menu.setMENU_STATE("1");
+		if (addMenu(menu)){
+			FHLOG.save(Jurisdiction.getUsername(), "动态创建代码及菜单成功，功能地址"+menu.getMENU_NAME());
+		}
+		/*========================创建菜单完成====================*/
 		//this.print("oracle_SQL_Template.ftl", root);  控制台打印
-		/*生成的全部代码压缩成zip文件*/
+		/*=====================================生成的全部代码压缩成zip文件=====================================*/
 		if(FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip")){
 			/*下载代码*/
 			FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", "code.zip");
@@ -259,6 +305,70 @@ public class CreateCodeController extends BaseController {
 			logAfter(logger);
 		}
 		return AppUtil.returnObject(pd, map);
+	}
+
+	/**
+	 * 重启发布
+	 */
+	@RequestMapping(value="/commdCode")
+	@ResponseBody
+	public Object commdCode() throws Exception {
+		logBefore(logger, Jurisdiction.getUsername()+"commdCode");
+		try {
+			goOrder();
+		} catch (Exception e) {
+			logger.error(e.toString(), e);
+		} finally {
+			logAfter(logger);
+		}
+		return "";
+	}
+
+	private boolean addMenu(Menu menu)throws Exception{
+		boolean isAddMenu = false;
+		logBefore(logger, Jurisdiction.getUsername()+"保存菜单");
+		try{
+			menu.setMENU_ID(String.valueOf(Integer.parseInt(menuService.findMaxIdNoParm())+1));
+			menu.setMENU_ICON("menu-icon fa fa-leaf black");//默认菜单图标
+			menuService.saveMenu(menu); //保存菜单
+			FHLOG.save(Jurisdiction.getUsername(), "新增菜单"+menu.getMENU_NAME());
+			isAddMenu = true;
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return isAddMenu;
+	}
+
+	private void goOrder(){
+		String path = PathUtil.getClassResources();
+		String mvnOrder = "tomcat7:deploy";
+		String shellCommond = path+"mvnCommond.sh";
+		//给模板赋执行权限在mac系统和linux系统中使用
+		String systemName = Config.getValue("System.OSName").substring(0,1).toLowerCase();
+		switch (systemName){
+			case "m" : //MAC系统
+				MavenUtil.setpermission(shellCommond);
+				break;
+			case "l" : //类Linux系统
+				MavenUtil.setpermission(shellCommond);
+				break;
+			case "r" : //RedHat系统
+				MavenUtil.setpermission(shellCommond);
+				break;
+			case "c" : //CentOS系统
+				MavenUtil.setpermission(shellCommond);
+				break;
+			default:
+				break;
+		}
+		try {
+			MavenUtil.callMacShell(shellCommond,path, mvnOrder);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 }

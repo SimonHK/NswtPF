@@ -37,6 +37,12 @@ public interface MenuManager {
 	 * @throws Exception
 	 */
 	public PageData findMaxId(PageData pd) throws Exception;
+
+	/**
+	 * @return
+	 * @throws Exception
+	 * */
+	public String findMaxIdNoParm() throws Exception;
 	
 	/**
 	 * @param MENU_ID

@@ -155,6 +155,7 @@
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
 									<a class="btn btn-mini btn-success" onclick="productCode('add');">启动生成器</a>
+									<a class="btn btn-mini btn-success" onclick="reCommdCode();">重启发布</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -165,7 +166,7 @@
 						</table>
 						</div>
 						</form>
-					
+
 						</div>
 						<!-- /.col -->
 					</div>
@@ -224,7 +225,7 @@
 			 diag.Width = 800;
 			 diag.Height = 500;
 			 diag.Modal = true;				//有无遮罩窗口
-			 diag. ShowMaxButton = true;	//最大化按钮
+			 diag.ShowMaxButton = true;	//最大化按钮
 		     diag.ShowMinButton = true;		//最小化按钮
 			 diag.CancelEvent = function(){ //关闭事件
 				if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
@@ -297,6 +298,17 @@
 					}
 				}
 			});
+		};
+
+		//编译执行
+		function reCommdCode(){
+            bootbox.confirm("确定要编译重启吗?", function(result) {
+				top.jzts();
+				var url = "<%=basePath%>createCode/commdCode.do?&tm="+new Date().getTime();
+				$.get(url,function(data){
+					nextPage(${page.currentPage});
+				});
+            });
 		};
 	</script>
 

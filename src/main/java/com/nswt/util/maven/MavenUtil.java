@@ -115,7 +115,7 @@ public class MavenUtil {
         Process process = null;
         List<String> processList = new ArrayList<String>();
         try {
-            process = Runtime.getRuntime().exec(new String("chmod 777 "+shellFilePath2));
+            process = Runtime.getRuntime().exec(new String("chmod 755 "+shellFilePath2));
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line = "";
             while ((line = input.readLine()) != null) {

@@ -62,6 +62,14 @@ public class MenuService implements MenuManager{
 	public PageData findMaxId(PageData pd) throws Exception {
 		return (PageData) dao.findForObject("MenuMapper.findMaxId", pd);
 	}
+
+	/**
+	 * 无参获取最大值
+	 *
+	 * **/
+	public String findMaxIdNoParm() throws Exception{
+		return (String) dao.findForObject("MenuMapper.findMaxIdNoParm",null);
+	}
 	
 	/**
 	 * 删除菜单

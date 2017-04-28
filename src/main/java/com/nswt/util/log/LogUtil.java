@@ -26,7 +26,7 @@ public class LogUtil {
         try {
             Log4jErrorPrintStream errStream = new Log4jErrorPrintStream(System.err);
             System.setErr(errStream);
-            String fileName = Config.getClassesPath() + "log4j.config";
+            String fileName = Config.getClassesPath() + "log4j.properties";
             String txt = FileUtil.readText(fileName);
             txt = StringUtil.replaceEx(txt, "%{ContextRealPath}", Config.getContextRealPath());
             Properties ps = new Properties();

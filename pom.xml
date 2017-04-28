@@ -94,7 +94,18 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- spring end -->
-
+		<!--java 读取 Maven 配置需要依赖-->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model-builder</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<!-- read Maven end-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -581,7 +592,7 @@
 			<id>releases</id>
 			<name>Releases</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/releases/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -593,7 +604,7 @@
 			<id>snapshots</id>
 			<name>Snapshots</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/snapshots/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -612,7 +623,7 @@
 			<id>releases</id>
 			<name>Releases</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/releases/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -624,7 +635,7 @@
 			<id>snapshots</id>
 			<name>Snapshots</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/snapshots/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -639,13 +650,13 @@
 			<id>releases</id>
 			<name>Releases</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/releases/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
 			<name>Snapshots</name>
 			<!--<url>http://192.168.2.86:9091/nexus/content/repositories/snapshots/</url>-->
-			<url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+			<url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>

@@ -33,6 +33,8 @@ import java.util.concurrent.Future;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import static com.nswt.util.PropValuesUtil.getPprVue;
+
 /** 
  * 说明：用于备份、还原数据库、在线编辑SQL
  * 创建人：HongKai
@@ -41,7 +43,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class DbFH{
 	private static Log logger = LogFactory.getLog(DbFH.class);
-	private static Properties pros = getPprVue();
+	//读取dbfh.properties 配置文件
+	private static Properties pros = getPprVue("dbfh.properties");
 	public static Map<String, String> backUpTableList = new ConcurrentHashMap<String, String>();
 	public static Map<String, String> recoverTableList = new ConcurrentHashMap<String, String>();
 	private static DbFH dbFH = new DbFH();
@@ -544,7 +547,7 @@ public class DbFH{
 	 * @return
 	 * @throws IOException
 	 */
-	public static Properties getPprVue() {
+/*	public static Properties getPprVue() {
 		InputStream inputStream = DbFH.class.getClassLoader().getResourceAsStream("dbfh.properties");
 		Properties p = new Properties();
 		try {
@@ -555,7 +558,7 @@ public class DbFH{
 			e.printStackTrace();
 		}
 		return p;
-	}
+	}*/
 	
 	/**获取备份数据库的参数
 	 * @return
