@@ -122,7 +122,7 @@ public class SmsUtil {
 	 * 短信商 二  http://www.ihuyi.com/ =====================================================================================
 	 * 
 	 */
-	private static String Url = "http://106.ihuyi.com/webservice/sms.php?method=Submit";
+	private static String Url = "http://api.yx.ihuyi.com/webservice/sms.php?method=Submit";
 	
 	
 	

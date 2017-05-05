@@ -69,7 +69,7 @@
 			</tr>
 			<tr>
 				<td id="nr">
-					 <textarea name="CONTENT" id="CONTENT" style="width:98%;height:165px;" rows="7" cols="50" title="第三方短信内容需要提交官方审核,否则发送失败!">您的验证码是：12358 。请不要把验证码泄露给其他人。</textarea>
+					 <textarea name="CONTENT" id="CONTENT" style="width:98%;height:165px;" rows="7" cols="50" title="第三方短信内容需要提交官方审核,否则发送失败!">您的订单编码：888888。如需帮助请联系客服。</textarea>
 				</td>
 			</tr>
 			<tr>
