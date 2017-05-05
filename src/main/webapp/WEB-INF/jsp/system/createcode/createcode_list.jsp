@@ -13,10 +13,8 @@
 <html lang="en">
 <head>
 <base href="<%=basePath%>">
-
 <!-- jsp文件头和头部 -->
 <%@ include file="../index/top.jsp"%>
-
 </head>
 <body class="no-skin">
 

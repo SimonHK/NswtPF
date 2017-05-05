@@ -28,7 +28,6 @@
 		.commitbox_cen div.right span.save{border:solid 1px #c7c7c7; background:#6FB3E0; border-radius:3px; color:#FFF; padding:5px 10px;}
 		.commitbox_cen div.right span.quxiao{border:solid 1px #f77400; background:#f77400; border-radius:3px; color:#FFF; padding:4px 9px;}
 		</style>
-		
 	</head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -100,6 +99,7 @@
 						<input type="hidden" name="zindex" id="zindex" value="0">
 						<input type="hidden" name="FIELDLIST" id="FIELDLIST" value="">
 						<input type="hidden" name="faobject" id="faobject" value="">
+						<input type="hidden" name="menu_id" id="menu_id" value=""/>
 						<div id="zhongxin">
 						<table style="margin-top: 10px;">
 							<tr>
@@ -140,9 +140,20 @@
 								<td><input type="text" name="tabletop" id="tabletop" value="${msg == 'add' ? 'TB_' : ''}${fn:split(pd.TABLENAME, ',fh,')[0]}" placeholder="这里输入表前缀" style="width:156px" title="表前缀"/></td>
 							</tr>
 						</table>
-						
+						<table style="margin-top: 5px;">
+							<tr>
+								<td style="width:76px;text-align: right;">功能菜单：</td>
+								<td id="js">
+									<select class="chosen-select form-control" name="MENU_ID" id="menu_id" data-placeholder="请选择一个菜单组" style="vertical-align:top;"  title="菜单组" style="width:98%;" >
+										<option value=""></option>
+										<c:forEach items="${menuList}" var="menu">
+											<option value="${menu.MENU_ID}" <c:if test="${menu.MENU_ID == 1 }">selected</c:if>>${menu.MENU_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+						</table>
 						<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top: 5px;">
-								
 								<thead>
 									<tr>
 										<th class="center" style="width:50px;">序号</th>
@@ -156,11 +167,8 @@
 										<th class="center" style="width:69px;">操作</th>
 									</tr>
 								</thead>
-														
 								<tbody id="fields"></tbody>
-								
 						</table>
-						
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="text-align: center;" colspan="100">

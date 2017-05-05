@@ -18,6 +18,7 @@ import com.nswt.service.system.menu.MenuManager;
 import com.nswt.util.*;
 import com.nswt.util.config.Config;
 import com.nswt.util.maven.MavenUtil;
+import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,7 @@ public class CreateCodeController extends BaseController {
 	private MenuManager menuService;
 	@Resource(name="fhlogService")
 	private FHlogManager FHLOG;
+
 
 	/**列表
 	 * @param page
@@ -90,6 +92,8 @@ public class CreateCodeController extends BaseController {
 			mv.addObject("msg", "add");
 		}
 		List<PageData> varList = createcodeService.listFa(); //列出所有主表结构的
+		List<Menu> athmenuList = menuService.listAllMenuQx("0");					//获取某菜单下所有子菜单
+		mv.addObject("menuList",athmenuList);
 		mv.addObject("varList", varList);
 		mv.setViewName("system/createcode/productCode");
 		return mv;
@@ -117,6 +121,7 @@ public class CreateCodeController extends BaseController {
 		String zindext = pd.getString("zindex");	   	   			//属性总数
 		String USERNAME = "hongkai";								//创建人
 		String USERMAILL = "18611949252@163.com";					//创建人MAILL
+		String MENU_ID = pd.getString("MENU_ID");              //功能组（菜单组）
 		int zindex = 0;
 		if(null != zindext && !"".equals(zindext)){
 			zindex = Integer.parseInt(zindext);
@@ -211,7 +216,7 @@ public class CreateCodeController extends BaseController {
 		Menu menu = new Menu();
 		menu.setMENU_NAME(TITLE);
 		menu.setMENU_URL(menuurl);
-		menu.setPARENT_ID("67");
+		menu.setPARENT_ID(StringUtil.noNull(MENU_ID).equals("")?"67":MENU_ID);
 		menu.setMENU_ORDER("99");
 		menu.setMENU_TYPE("1");
 		menu.setMENU_STATE("1");
@@ -370,5 +375,21 @@ public class CreateCodeController extends BaseController {
 		}
 
 	}
-	
+	/**根据角色权限获取本权限的菜单列表(递归处理)
+	 * @param menuList：传入的总菜单
+	 * @param roleRights：加密的权限字符串
+	 * @return
+	 */
+	private List<Menu> readMenu(List<Menu> menuList,String roleRights){
+		for(int i=0;i<menuList.size();i++){
+			menuList.get(i).setHasMenu(RightsHelper.testRights(roleRights, menuList.get(i).getMENU_ID()));
+			if(menuList.get(i).isHasMenu() && "1".equals(menuList.get(i).getMENU_STATE())){	//判断是否有此菜单权限并且是否隐藏
+				this.readMenu(menuList.get(i).getSubMenu(), roleRights);					//是：继续排查其子菜单
+			}else{
+				menuList.remove(i);
+				i--;
+			}
+		}
+		return menuList;
+	}
 }
