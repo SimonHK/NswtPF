@@ -104,7 +104,7 @@
 						<table style="margin-top: 10px;">
 							<tr>
 								<td style="width:76px;text-align: right;">模块说明：</td>
-								<td><div class="nav-search"><input class="nav-search-input" type="text" name="TITLE" id="TITLE" value="${pd.TITLE }" placeholder="这里输入模块说明内容" style="width:543px;" title="说明"/></div></td>
+								<td><div class="nav-search"><input class="nav-search-input" type="text" name="TITLE" id="TITLE" value="${pd.TITLE }" placeholder="这里输入模块说明内容此内容作为菜单名称建议中文4～5个字" style="width:543px;" title="说明"/></div></td>
 								<td style="width:76px;text-align: right;">模块类型：</td>
 								<td>
 									<select name="FHTYPE" id="FHTYPE" data-placeholder="请选择数据库"  style="vertical-align:top;width: 87px;" onchange="selectType(this.value)">

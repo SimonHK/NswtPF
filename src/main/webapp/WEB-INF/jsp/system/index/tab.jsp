@@ -53,13 +53,13 @@ $( function() {
 		url :"<%=basePath%>login_default.do",
 		isClosed :false
 	});
-	/**tab.add( {
+/*	tab.add( {
 		id :'tab1_index1',
 		title :"主页",
 		url :"/per/undoTask!gettwo",
 		isClosed :false
-	});
-	**/
+	});*/
+
 });
 
 	function cmainFrameT(){

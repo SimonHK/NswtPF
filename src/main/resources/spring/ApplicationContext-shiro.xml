@@ -38,6 +38,8 @@
 				/plugins/keypad/** 			= anon
 				/static/js/myjs/** 			= authc
 				/static/js/** 				= anon
+				/settle/**                  = anon
+				/d3exmple/**			    = anon
 				/uploadFiles/uploadImgs/** 	= anon
 	           	/code.do 					= anon
 	           	/login_login	 			= anon

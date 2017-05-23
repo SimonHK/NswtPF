@@ -224,11 +224,18 @@ public class CreateCodeController extends BaseController {
 			FHLOG.save(Jurisdiction.getUsername(), "动态创建代码及菜单成功，功能地址"+menu.getMENU_NAME());
 		}
 		/*========================创建菜单完成====================*/
+		/*============拷贝生成的代码保存至代码仓库==================*/
+		String TITLEPinYin = GetPinyin.getPingYin(TITLE);
+		String thisCopytime = StringUtil.replaceEx(DateUtil.getCurrentDate().concat(DateUtil.getCurrentTime()),":","");
+		/*==========================拷贝完成=====================*/
+
 		//this.print("oracle_SQL_Template.ftl", root);  控制台打印
 		/*=====================================生成的全部代码压缩成zip文件=====================================*/
 		if(FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip")){
+			/*备份代码*/
+			FileUtil.copy(projectwebpath+"/"+"admin/ftl/code.zip",projectwebpath+"/"+"comp_warehouse/"+TITLEPinYin+thisCopytime+".zip");
 			/*下载代码*/
-			FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", "code.zip");
+			FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", TITLEPinYin+thisCopytime+".zip");
 		}
 	}
 	
