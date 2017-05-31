@@ -12,7 +12,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nswt.entity.system.Dictionaries;
 import com.nswt.entity.system.Menu;
+import com.nswt.service.system.dictionaries.DictionariesManager;
 import com.nswt.service.system.fhlog.FHlogManager;
 import com.nswt.service.system.menu.MenuManager;
 import com.nswt.util.*;
@@ -47,7 +49,8 @@ public class CreateCodeController extends BaseController {
 	private MenuManager menuService;
 	@Resource(name="fhlogService")
 	private FHlogManager FHLOG;
-
+	@Resource(name="dictionariesService")
+	private DictionariesManager dictionariesService;
 
 	/**列表
 	 * @param page
@@ -147,6 +150,7 @@ public class CreateCodeController extends BaseController {
 		/* ============================================================================================= */
 		String filePath = "admin/ftl/code/";						//存放路径
 		String ftlPath = "createCode";								//ftl路径
+		String projectwebpath = getPprVue("autocreate.properties").getProperty("project_web"); //===获取开发web目录
 		if("tree".equals(FHTYPE)){
 			ftlPath = "createTreeCode";
 			/*生成实体类*/
@@ -158,6 +162,52 @@ public class CreateCodeController extends BaseController {
 		}else if("sontable".equals(FHTYPE)){
 			ftlPath = "createSoCode";	//明细表
 		}
+
+		/*=======================================生成代码================================================*/
+		generationCode(root,packageName,objectName,filePath,ftlPath,tabletop);
+		/*=================================依据生成sql创建数据库表=============================================*/
+		generationDbTable(filePath,tabletop,objectName,faobject);
+		/*=============================================拷贝生成代码入开发目录中待编译并保存入代码仓库===========================*/
+		generationCopyCode(filePath);
+
+		/*========================创建菜单=======================*/
+		String menuurl = objectName.toLowerCase()+"/list.do";
+		Menu menu = new Menu();
+		menu.setMENU_NAME(TITLE);
+		menu.setMENU_URL(menuurl);
+		menu.setPARENT_ID(StringUtil.noNull(MENU_ID).equals("")?"67":MENU_ID);
+		menu.setMENU_ORDER("99");
+		menu.setMENU_TYPE("1");
+		menu.setMENU_STATE("1");
+		if (addMenu(menu)){
+			FHLOG.save(Jurisdiction.getUsername(), "动态创建代码及菜单成功，功能地址"+menu.getMENU_NAME());
+		}
+		/*========================创建菜单完成====================*/
+
+
+		//this.print("oracle_SQL_Template.ftl", root);  控制台打印
+		/*=====================================生成的全部代码压缩成zip文件=====================================*/
+		String TITLEPinYin = GetPinyin.getPingYin(TITLE);
+		String thisCopytime = StringUtil.replaceEx(DateUtil.getCurrentDate().concat(DateUtil.getCurrentTime()),":","");
+		if(FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip")){
+			/*备份代码*/
+			FileUtil.copy(projectwebpath+"/"+"admin/ftl/code.zip",projectwebpath+"/"+"comp_warehouse/"+TITLEPinYin+thisCopytime+".zip");
+			/*下载代码*/
+			FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", TITLEPinYin+thisCopytime+".zip");
+		}
+	}
+
+	/**
+	 * 调用不同模版进行代码生成
+	 * @param root
+	 * @param packageName
+	 * @param objectName
+	 * @param filePath
+	 * @param ftlPath
+	 * @param tabletop
+	 * */
+	private void generationCode(Map<String,Object> root,String packageName,String objectName,
+			String filePath,String ftlPath,String tabletop)throws Exception{
 
 		/*=============================================代码生成=============================================*/
 		/*生成controller*/
@@ -180,6 +230,9 @@ public class CreateCodeController extends BaseController {
 		/*生成说明文档*/
 		/*===========================================代码生成完毕=============================================*/
 
+	}
+
+	private void generationDbTable(String filePath,String tabletop,String objectName,String faobject)throws Exception{
 		/*=================================依据生成sql创建数据库表=============================================*/
 		String dbtype =   getPprVue("dbfh.properties").getProperty("dbtype");
 		String sqlfilepath = getPprVue("autocreate.properties").getProperty("project_web")+"/"+filePath;
@@ -190,6 +243,9 @@ public class CreateCodeController extends BaseController {
 		DbFH dbFH = new DbFH();
 		String reCreateMessage = dbFH.recover(faobject,sqlfilename).toString();
 		/*=============================================创建完毕==============================================*/
+	}
+
+	private void generationCopyCode(String filePath){
 
 		/*=============================================拷贝生成代码入开发目录中待编译===========================*/
 		String projectwebpath = getPprVue("autocreate.properties").getProperty("project_web"); //===获取开发web目录
@@ -211,34 +267,12 @@ public class CreateCodeController extends BaseController {
 		FileUtil.copyDir(new File(projectwebpath+"/"+filePath+"jsp/"),jspsource);
 		/*=============================================拷贝完成=============================================*/
 
-		/*========================创建菜单=======================*/
-		String menuurl = objectName.toLowerCase()+"/list.do";
-		Menu menu = new Menu();
-		menu.setMENU_NAME(TITLE);
-		menu.setMENU_URL(menuurl);
-		menu.setPARENT_ID(StringUtil.noNull(MENU_ID).equals("")?"67":MENU_ID);
-		menu.setMENU_ORDER("99");
-		menu.setMENU_TYPE("1");
-		menu.setMENU_STATE("1");
-		if (addMenu(menu)){
-			FHLOG.save(Jurisdiction.getUsername(), "动态创建代码及菜单成功，功能地址"+menu.getMENU_NAME());
-		}
-		/*========================创建菜单完成====================*/
 		/*============拷贝生成的代码保存至代码仓库==================*/
-		String TITLEPinYin = GetPinyin.getPingYin(TITLE);
-		String thisCopytime = StringUtil.replaceEx(DateUtil.getCurrentDate().concat(DateUtil.getCurrentTime()),":","");
-		/*==========================拷贝完成=====================*/
 
-		//this.print("oracle_SQL_Template.ftl", root);  控制台打印
-		/*=====================================生成的全部代码压缩成zip文件=====================================*/
-		if(FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip")){
-			/*备份代码*/
-			FileUtil.copy(projectwebpath+"/"+"admin/ftl/code.zip",projectwebpath+"/"+"comp_warehouse/"+TITLEPinYin+thisCopytime+".zip");
-			/*下载代码*/
-			FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", TITLEPinYin+thisCopytime+".zip");
-		}
+		/*==========================拷贝完成=====================*/
 	}
-	
+
+
 	/**保存到数据库
 	 * @throws Exception
 	 */
@@ -399,4 +433,35 @@ public class CreateCodeController extends BaseController {
 		}
 		return menuList;
 	}
+
+	/**获取连级数据
+	 * @return
+	 */
+	@RequestMapping(value="/getTemplateType")
+	@ResponseBody
+	public Object getLevels(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		String errInfo = "success";
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String DICTIONARIES_ID = "58146a8cb56e42a7a1c6cd40873983a6";
+			DICTIONARIES_ID = Tools.isEmpty(DICTIONARIES_ID)?"0":DICTIONARIES_ID;
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(DICTIONARIES_ID); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			map.put("list", pdList);
+		} catch(Exception e){
+			errInfo = "error";
+			logger.error(e.toString(), e);
+		}
+		map.put("result", errInfo);				//返回结果
+		return AppUtil.returnObject(new PageData(), map);
+	}
+
 }

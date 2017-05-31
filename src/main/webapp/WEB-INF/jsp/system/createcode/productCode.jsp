@@ -99,19 +99,15 @@
 						<input type="hidden" name="zindex" id="zindex" value="0">
 						<input type="hidden" name="FIELDLIST" id="FIELDLIST" value="">
 						<input type="hidden" name="faobject" id="faobject" value="">
-						<input type="hidden" name="menu_id" id="menu_id" value=""/>
 						<div id="zhongxin">
 						<table style="margin-top: 10px;">
 							<tr>
 								<td style="width:76px;text-align: right;">模块说明：</td>
 								<td><div class="nav-search"><input class="nav-search-input" type="text" name="TITLE" id="TITLE" value="${pd.TITLE }" placeholder="这里输入模块说明内容此内容作为菜单名称建议中文4～5个字" style="width:543px;" title="说明"/></div></td>
-								<td style="width:76px;text-align: right;">模块类型：</td>
-								<td>
-									<select name="FHTYPE" id="FHTYPE" data-placeholder="请选择数据库"  style="vertical-align:top;width: 87px;" onchange="selectType(this.value)">
-										<option value="single">单表</option>
-										<option value="tree">树形</option>
-										<option value="fathertable">主表</option>
-										<option value="sontable">明细表</option>
+								<td style="width:76px;text-align: right;">模版类型：</td>
+								<td style="padding-left:2px">
+									<select id="codeTemplate" name="codeTemplate">
+										<option>请选择</option>
 									</select>
 								</td>
 							</tr>
@@ -121,14 +117,6 @@
 								<td style="width:76px;text-align: right;">上级包名：</td>
 								<td colspan="1"><input type="text" name="packageName" id="packageName" value="${pd.PACKAGENAME }" placeholder="包名  (不要输入特殊字符,请用纯字母)" style="width:259px" title="包名称"/></td>
 								<td>&nbsp;&nbsp;例如:com.nswt.controller.<font color="red" style="font-weight: bold;">system</font>&nbsp;&nbsp;只输入红色部分</td>
-								<td style="padding-left: 10px;">
-									<select name="faobjectid" id="faobjectid" data-placeholder="请选择" disabled="disabled" style="vertical-align:top;width:150px;background-color: #F5F5F5;" onchange="selectFa(this.value)">
-										<option value="">选择主表</option>
-										<c:forEach items="${varList}" var="var">
-										<option value="${var.CREATECODE_ID }">${var.OBJECTNAME}</option>
-										</c:forEach>
-									</select>
-								</td>
 							</tr>
 						</table>
 						<table style="margin-top: 5px;">
@@ -148,6 +136,23 @@
 										<option value=""></option>
 										<c:forEach items="${menuList}" var="menu">
 											<option value="${menu.MENU_ID}" <c:if test="${menu.MENU_ID == 1 }">selected</c:if>>${menu.MENU_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+								<td style="width:76px;text-align: right;">模块类型：</td>
+								<td>
+									<select name="FHTYPE" id="FHTYPE" data-placeholder="请选择数据库"  style="vertical-align:top;width: 87px;" onchange="selectType(this.value)">
+										<option value="single">单表</option>
+										<option value="tree">树形</option>
+										<option value="fathertable">主表</option>
+										<option value="sontable">明细表</option>
+									</select>
+								</td>
+								<td style="padding-left: 10px;">
+									<select name="faobjectid" id="faobjectid" data-placeholder="请选择" disabled="disabled" style="vertical-align:top;width:150px;background-color: #F5F5F5;" onchange="selectFa(this.value)">
+										<option value="">选择主表</option>
+										<c:forEach items="${varList}" var="var">
+											<option value="${var.CREATECODE_ID }">${var.OBJECTNAME}</option>
 										</c:forEach>
 									</select>
 								</td>
@@ -211,6 +216,22 @@
 				}
 			}
 		}
+		//获取模版类型
+        $(function() {
+            $.ajax({
+                type: "POST",
+                url: '<%=basePath%>createCode/getTemplateType.do?tm='+new Date().getTime(),
+                data: {},
+                dataType:'json',
+                cache: false,
+                success: function(data){
+                    $("#codeTemplate").html('<option>请选择</option>');
+                    $.each(data.list, function(i, dvar){
+                        $("#codeTemplate").append("<option value="+dvar.DICTIONARIES_ID+">"+dvar.NAME+"</option>");
+                    });
+                }
+            });
+        });
 		</script>
 	
 </body>
