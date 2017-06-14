@@ -18,30 +18,30 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />--%>
-	<link href="htgl_1/assets/css/bootstrap.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="htgl_1/css/style.css"/>
-	<link rel="stylesheet" href="htgl_1/assets/css/font-awesome.min.css" />
-	<link href="htgl_1/assets/css/codemirror.css" rel="stylesheet">
-	<link rel="stylesheet" href="htgl_1/font/css/font-awesome.min.css" />
+	<link href="plugins/htgl_1/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="plugins/htgl_1/css/style.css"/>
+	<link rel="stylesheet" href="plugins/htgl_1/assets/css/font-awesome.min.css" />
+	<link href="plugins/htgl_1/assets/css/codemirror.css" rel="stylesheet">
+	<link rel="stylesheet" href="plugins/htgl_1/font/css/font-awesome.min.css" />
 	<!--[if lte IE 8]>
-	<link rel="stylesheet" href="htgl_1/assets/css/ace-ie.min.css" />
+	<link rel="stylesheet" href="plugins/htgl_1/assets/css/ace-ie.min.css" />
 	<![endif]-->
 	<!--[if IE 7]>
-	<link rel="stylesheet" href="htgl_1/assets/css/font-awesome-ie7.min.css" />
+	<link rel="stylesheet" href="plugins/htgl_1/assets/css/font-awesome-ie7.min.css" />
 	<![endif]-->
 	<!--[if lte IE 8]>
-	<link rel="stylesheet" href="htgl_1/assets/css/ace-ie.min.css" />
+	<link rel="stylesheet" href="plugins/htgl_1/assets/css/ace-ie.min.css" />
 	<![endif]-->
-	<script src="htgl_1/assets/js/ace-extra.min.js"></script>
+	<script src="plugins/htgl_1/assets/js/ace-extra.min.js"></script>
 	<!--[if lt IE 9]>
-	<script src="htgl_1/assets/js/html5shiv.js"></script>
-	<script src="htgl_1/assets/js/respond.min.js"></script>
+	<script src="plugins/htgl_1/assets/js/html5shiv.js"></script>
+	<script src="plugins/htgl_1/assets/js/respond.min.js"></script>
 	<![endif]-->
 	<!--[if !IE]> -->
-	<script src="htgl_1/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="plugins/htgl_1/js/jquery-1.9.1.min.js" type="text/javascript"></script>
 	<!-- <![endif]-->
-	<script src="htgl_1/assets/dist/echarts.js"></script>
-	<script src="htgl_1/assets/js/bootstrap.min.js"></script>
+	<script src="plugins/htgl_1/assets/dist/echarts.js"></script>
+	<script src="plugins/htgl_1/assets/js/bootstrap.min.js"></script>
 </head>
 <body class="no-skin">
 <div class=" page-content clearfix">
@@ -72,6 +72,9 @@
 	</div>
 	<div class="t_Record">
 		<div id="main" style="height:400px; overflow:hidden; width:100%; overflow:auto" ></div>
+	</div>
+	<div class="t_Record">
+		<div id="main2" style="height:400px; overflow:hidden; width:100%; overflow:auto" ></div>
 	</div>
 </div>
 <%--	<!-- /section:basics/navbar.layout -->
@@ -466,7 +469,7 @@
 
         require.config({
             paths: {
-                echarts: 'htgl_1/assets/dist'
+                echarts: 'plugins/htgl_1/assets/dist'
             }
         });
         require(
@@ -566,6 +569,89 @@
                 myChart.setOption(option);
             }
         );
+
+		/* 饼状图 Start*/
+        require([
+                'echarts',
+                'echarts/theme/macarons',
+                'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/pie', // 使用饼状图就加载pie模块，按需加载
+                'echarts/chart/funnel'
+            ],
+            newShowPeiChart
+        );
+
+        var myChart2;
+
+        var inData = [];   //投入
+        var outData = [];	//产出
+        var proData = [];   //利润
+
+        function newShowPeiChart(ec,theme){
+            $.ajax({
+                type : "post",
+                url : "<%=basePath%>transaction/getTimeChar.do",
+                dataType : 'json',
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                },
+                success : function(result) {
+                    if (result.status == "success") {
+                        var inCosts = result.data.inCosts;
+                        var outCosts = result.data.outCosts;
+                        var profits = result.data.profits;
+                        if(inCosts != null){
+                            inData = inCosts;
+                        }
+                        if(outCosts != null){
+                            outData = outCosts;
+                        }
+                        if(profits != null){
+                            proData = profits;
+                        }
+                    }
+                }
+            });
+
+            myChart2 = ec.init(document.getElementById('main2'), 'theme');// 基于准备好的dom，初始化echarts图表
+
+            option2 = {
+                title : {
+                    text: '投入产出资金统计图'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['投入资金','产出资金','利润']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: false, type: ['bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [inData,outData,proData]
+            };
+
+            myChart2.setOption(option2); // 为echarts对象加载数据
+        }
 	</script>
 
 </body>

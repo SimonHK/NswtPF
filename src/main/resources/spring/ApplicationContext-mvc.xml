@@ -21,6 +21,7 @@
 	<mvc:resources mapping="/d3exmple/**" location="/,/d3exmple/"/>
 	<mvc:resources mapping="/plugins/**" location="/,/plugins/" />
 	<mvc:resources mapping="/uploadFiles/**" location="/,/uploadFiles/" />
+	<mvc:resources mapping="/bpmediter/**" location="/bpmediter/"/>
 
 	<!-- 访问拦截  -->  
   	<mvc:interceptors>

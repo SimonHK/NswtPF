@@ -10,7 +10,8 @@
 			classpath:spring/ApplicationContext-main.xml,
 			classpath:spring/ApplicationContext-dataSource.xml,
 			classpath:spring/ApplicationContext-shiro.xml,
-			classpath:spring/ApplicationContext-redis.xml
+			classpath:spring/ApplicationContext-redis.xml,
+			classpath:spring/ApplicationContext-activiti.xml
 		</param-value>
 	</context-param>
 	<context-param>

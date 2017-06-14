@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_7" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="Maven: org.slf4j:jcl-over-slf4j:1.7.19" scope="RUNTIME"/>
+	<lib name="Maven: axis-ant:axis-ant:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/axis-ant.jar!/"/>
+	</lib>
+	<lib name="Maven: fcexporter:fcexporter:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fcexporter.jar!/"/>
+	</lib>
+	<lib name="Maven: fcexporthandler:fcexporthandler:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fcexporthandler.jar!/"/>
+	</lib>
+	<lib name="Maven: fchelper:fchelper:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fchelper.jar!/"/>
+	</lib>
+	<lib name="Maven: fcsampleshelper:fcsampleshelper:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fcsampleshelper.jar!/"/>
+	</lib>
+	<lib name="Maven: fctl:fctl:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fctl.jar!/"/>
+	</lib>
+	<lib name="Maven: jsonlib:jsonlib:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/json-lib-2.4-jdk15.jar!/"/>
+	</lib>
+	<lib name="Maven: jackson:jackson:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jackson-all-1.7.6.jar!/"/>
+	</lib>
+	<lib name="Maven: jpush:jpush:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jpush-java-libraryV2.jar!/"/>
+	</lib>
+	<lib name="Maven: mail:mail:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mail.jar!/"/>
+	</lib>
+	<lib name="Maven: mybatis-ehcache:mybatis-ehcache:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mybatis-ehcache-1.0.3.jar!/"/>
+	</lib>
+	<lib name="Maven: mybatis-oscache:mybatis-oscache:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mybatis-oscache-1.0.1.jar!/"/>
+	</lib>
+	<lib name="Maven: ojdbc6:ojdbc6:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/ojdbc6.jar!/"/>
+	</lib>
+	<lib name="Maven: pinyin4j:pinyin4j:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/pinyin4j-2.5.0.jar!/"/>
+	</lib>
+	<lib name="Maven: poi:poi:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: poi-examples:poi-examples:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-examples-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: poi-excelant:poi-excelant:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-excelant-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: poi-ooxml:poi-ooxml:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-ooxml-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: poi-ooxml-schemas:poi-ooxml-schemas:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-ooxml-schemas-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: poi-scratchpad:poi-scratchpad:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-scratchpad-3.11-20141221.jar!/"/>
+	</lib>
+	<lib name="Maven: QRCode:QRCode:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/QRCode.jar!/"/>
+	</lib>
+	<lib name="Maven: saaj:saaj:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/saaj.jar!/"/>
+	</lib>
+	<lib name="Maven: shiro:shiro:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/shiro-all-1.2.3.jar!/"/>
+	</lib>
+	<lib name="Maven: sun-misc:sun-misc:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/sun.misc.BASE64Decoder.jar!/"/>
+	</lib>
+	<lib name="Maven: ueditor:ueditor:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/ueditor.jar!/"/>
+	</lib>
+	<lib name="Maven: java_websocket:java_websocket:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/java_websocket.jar!/"/>
+	</lib>
+	<lib name="Maven: weixinapi:weixinapi:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/weixinapi.jar!/"/>
+	</lib>
+	<lib name="Maven: weaver-1.6.8:weaver-1.6.8:1.0" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar!/"/>
+	</lib>
+	<levels>
+		<level name="Maven: org.springframework:spring-aop:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-aspects:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.aspectj:aspectjweaver:1.8.8" value="project"/>
+		<level name="Maven: org.springframework:spring-beans:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-context:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-context-support:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-core:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-dao:2.0.8" value="project"/>
+		<level name="Maven: org.springframework:spring-expression:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-jdbc:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-mock:2.0.8" value="project"/>
+		<level name="Maven: junit:junit:3.8.1" value="project"/>
+		<level name="Maven: org.springframework:spring-orm:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-test:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-tx:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-web:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-webmvc:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.apache.maven:maven-model:3.0" value="project"/>
+		<level name="Maven: org.codehaus.plexus:plexus-utils:2.0.4" value="project"/>
+		<level name="Maven: org.apache.maven:maven-model-builder:3.0" value="project"/>
+		<level name="Maven: org.codehaus.plexus:plexus-interpolation:1.14" value="project"/>
+		<level name="Maven: org.codehaus.plexus:plexus-component-annotations:1.5.5" value="project"/>
+		<level name="Maven: mysql:mysql-connector-java:5.1.34" value="project"/>
+		<level name="Maven: javax.servlet:servlet-api:2.5" value="project"/>
+		<level name="Maven: aopalliance:aopalliance:1.0" value="project"/>
+		<level name="Maven: org.apache.james:apache-mime4j:0.6.1" value="project"/>
+		<level name="Maven: asm:asm:3.3.1" value="project"/>
+		<level name="Maven: org.apache.axis:axis:1.4" value="project"/>
+		<level name="Maven: cglib:cglib-nodep:3.1" value="project"/>
+		<level name="Maven: commons-beanutils:commons-beanutils:1.9.2" value="project"/>
+		<level name="Maven: commons-codec:commons-codec:1.10" value="project"/>
+		<level name="Maven: commons-collections:commons-collections:3.2.1" value="project"/>
+		<level name="Maven: commons-discovery:commons-discovery:0.5" value="project"/>
+		<level name="Maven: commons-fileupload:commons-fileupload:1.3.1" value="project"/>
+		<level name="Maven: commons-httpclient:commons-httpclient:3.1" value="project"/>
+		<level name="Maven: commons-io:commons-io:2.4" value="project"/>
+		<level name="Maven: commons-lang:commons-lang:2.6" value="project"/>
+		<level name="Maven: commons-logging:commons-logging:1.2" value="project"/>
+		<level name="Maven: dom4j:dom4j:1.6.1" value="project"/>
+		<level name="Maven: xml-apis:xml-apis:1.0.b2" value="project"/>
+		<level name="Maven: com.alibaba:druid:1.0.9" value="project"/>
+		<level name="Maven: net.sf.ehcache:ehcache-core:2.6.9" value="project"/>
+		<level name="Maven: net.sf.ezmorph:ezmorph:1.0.6" value="project"/>
+		<level name="Maven: org.freemarker:freemarker:2.3.21" value="project"/>
+		<level name="Maven: com.google.code.gson:gson:2.3.1" value="project"/>
+		<level name="Maven: org.apache.httpcomponents:httpcore:4.4" value="project"/>
+		<level name="Maven: org.apache.httpcomponents:httpmime:4.3.6" value="project"/>
+		<level name="Maven: org.apache.httpcomponents:httpclient:4.3.6" value="project"/>
+		<level name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.4" value="project"/>
+		<level name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" value="project"/>
+		<level name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" value="project"/>
+		<level name="Maven: javax.xml:jaxrpc-api:1.1" value="project"/>
+		<level name="Maven: jstl:jstl:1.2" value="project"/>
+		<level name="Maven: log4j:log4j:1.2.17" value="project"/>
+		<level name="Maven: org.mybatis:mybatis:3.3.1" value="project"/>
+		<level name="Maven: org.mybatis:mybatis-spring:1.2.0" value="project"/>
+		<level name="Maven: org.slf4j:slf4j-api:1.7.9" value="project"/>
+		<level name="Maven: org.slf4j:slf4j-log4j12:1.7.9" value="project"/>
+		<level name="Maven: taglibs:standard:1.1.2" value="project"/>
+		<level name="Maven: wsdl4j:wsdl4j:1.6.3" value="project"/>
+		<level name="Maven: com.hynnet:sqljdbc4-chs:4.0.2206.100" value="project"/>
+		<level name="Maven: org.quartz-scheduler:quartz:2.2.1" value="project"/>
+		<level name="Maven: c3p0:c3p0:0.9.1.1" value="project"/>
+		<level name="Maven: org.quartz-scheduler:quartz-jobs:2.2.1" value="project"/>
+		<level name="Maven: org.apache.commons:commons-pool2:2.4.2" value="project"/>
+		<level name="Maven: redis.clients:jedis:2.8.1" value="project"/>
+		<level name="Maven: org.springframework.data:spring-data-redis:1.7.1.RELEASE" value="project"/>
+		<level name="Maven: org.springframework.data:spring-data-keyvalue:1.1.1.RELEASE" value="project"/>
+		<level name="Maven: org.springframework.data:spring-data-commons:1.12.1.RELEASE" value="project"/>
+		<level name="Maven: org.springframework:spring-oxm:4.2.5.RELEASE" value="project"/>
+		<level name="Maven: org.slf4j:jcl-over-slf4j:1.7.19" value="project"/>
+		<level name="Maven: com.alibaba:fastjson:1.2.12" value="project"/>
+		<level name="Maven: org.kie:kie-api:6.3.0.Final" value="project"/>
+		<level name="Maven: org.drools:drools-core:6.3.0.Final" value="project"/>
+		<level name="Maven: org.mvel:mvel2:2.2.6.Final" value="project"/>
+		<level name="Maven: org.kie:kie-internal:6.3.0.Final" value="project"/>
+		<level name="Maven: org.drools:drools-compiler:6.3.0.Final" value="project"/>
+		<level name="Maven: org.antlr:antlr-runtime:3.5" value="project"/>
+		<level name="Maven: org.eclipse.jdt.core.compiler:ecj:4.3.1" value="project"/>
+		<level name="Maven: com.thoughtworks.xstream:xstream:1.4.7" value="project"/>
+		<level name="Maven: xmlpull:xmlpull:1.1.3.1" value="project"/>
+		<level name="Maven: xpp3:xpp3_min:1.1.4c" value="project"/>
+		<level name="Maven: com.google.protobuf:protobuf-java:2.5.0" value="project"/>
+		<level name="Maven: org.drools:drools-decisiontables:6.3.0.Final" value="project"/>
+		<level name="Maven: org.apache.poi:poi-ooxml:3.10.1" value="project"/>
+		<level name="Maven: org.apache.poi:poi-ooxml-schemas:3.10.1" value="project"/>
+		<level name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" value="project"/>
+		<level name="Maven: stax:stax-api:1.0.1" value="project"/>
+		<level name="Maven: org.apache.poi:poi:3.10.1" value="project"/>
+		<level name="Maven: org.drools:drools-templates:6.3.0.Final" value="project"/>
+	</levels>
+</component>
