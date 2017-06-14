@@ -14,8 +14,8 @@
 ![nswt](http://www.nswt.com.cn/wwwroot/xyla/images/img/banner/banner-ad-zhuti.png)
 
 ## 开发日志
-###Drools测试
-####2017年6月12日
+Drools测试
+2017年6月12日
 增加类：com.sample.DroolsTest
 增加资源文件夹：resources\META-INF\
               resources\rules  
@@ -23,8 +23,8 @@
          resources\rules\Sample.drl
          resources\logback-test.xml
 
-###Activity5 web 流程设计器
-####2017年6月14日
+Activity5 web 流程设计器
+2017年6月14日
 集成activity5 web流程设计器
 设计器控件翻译未完成，只部分翻译。
 
