@@ -3,12 +3,9 @@ package com.nswt.controller.analysis.transaction;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.annotation.Resource;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,7 +19,6 @@ import com.nswt.util.AppUtil;
 import com.nswt.util.ObjectExcelView;
 import com.nswt.util.PageData;
 import com.nswt.util.Jurisdiction;
-import com.nswt.util.Tools;
 import com.nswt.service.analysis.transaction.TransactionManager;
 
 /** 
@@ -213,4 +209,55 @@ public class TransactionController extends BaseController {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
 	}
+
+
+	@RequestMapping(value="/getTimeChar")
+	public Object getTimeChar(){
+
+		Map<String, Object> map = new HashMap<String,Object>();// 柱状图数据
+		String errInfo = "success";
+		List<Double> inCosts = new ArrayList<Double>();   //投入成本
+		List<Double> outCosts = new ArrayList<Double>();  //产出成本
+		List<Double> profits = new ArrayList<Double>();   //利润
+
+		Calendar now= new GregorianCalendar();
+		int y= now.get(Calendar.YEAR);
+		inCosts.add(22.22);
+		inCosts.add(24.33);
+		outCosts.add(33.4);
+		outCosts.add(66.5);
+		/*inCosts = intoService.getInto(y);
+		outCosts = intoService.getOut(y);*/
+
+		for (int i = 0; i < inCosts.size(); i++) {
+			double temp = outCosts.get(i) - inCosts.get(i);
+			if(temp < 0){
+				profits.add(0.0);
+			}else{
+				profits.add(temp);
+			}
+		}
+
+		BarDTO<Double> one = new BarDTO<Double>();
+		one.setName("投入资金");
+		one.setType("bar");
+		one.setData(inCosts);
+
+		BarDTO<Double> two = new BarDTO<Double>();
+		two.setName("产出资金");
+		two.setType("bar");
+		two.setData(outCosts);
+
+		BarDTO<Double> three = new BarDTO<Double>();
+		three.setName("利润");
+		three.setType("bar");
+		three.setData(profits);
+
+		map.put("inCosts",one);
+		map.put("outCosts",two);
+		map.put("profits",three);
+		map.put("result",errInfo);				//返回结果
+		return AppUtil.returnObject(new PageData(), map);
+	}
+
 }
