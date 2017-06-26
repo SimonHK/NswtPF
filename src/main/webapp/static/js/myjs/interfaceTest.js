@@ -189,4 +189,41 @@ function signBySha1(data) {
     return data;
 }
 
+function initService() {
+    var data = {
+        appKey: $("#appKey").val(),
+        userName: $("#userName").val(),
+//                password:$("#password").val(),  //password不签名！
+        method: $("#methodName").val(),
+        messageFormat: $("#getDataType").val(),
+        v: $("#methodVersin").val()
+    };
+    signBySha1(data);
+    $.ajax({
+        type: "get",
+        async: false,
+        url: $("#routerUrl").val(),
+        data: data,
+        dataType: "jsonp",
+        jsonp: "__invoke",//__invoke传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+        //jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+        success: function (data, textStatus) {
+            $("#methodResult").html("");
+            $("#methodResult").fadeOut();
+            var date = (new Date());
+            var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            $("#methodResult").html("[time]:" + time + "[data]:" + JSON.stringify(data)+ "[textStatus]:" + textStatus);
+            $("#json-field").fadeIn();
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            $("#methodResult").html("");
+            $("#methodResult").fadeOut();
+            var date = (new Date());
+            var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            $("#methodResult").html("[time]:" + time + "[data]:" + JSON.stringify(xmlHttpRequest) + "[textStatus]:" + textStatus);
+            $("#methodResult").fadeIn();
+        }
+    });
+}
+
 //sop end ----------------
