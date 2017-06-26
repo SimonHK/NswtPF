@@ -11,6 +11,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.knowlegene.sample.response.LogonResponse;
+import com.nswt.osp.client.CompositeResponse;
+import com.nswt.osp.client.DefaultOspClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +29,10 @@ import com.nswt.util.MapDistance;
 import com.nswt.util.PageData;
 import com.nswt.util.PathUtil;
 import com.nswt.util.TwoDimensionCode;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 /** 
  * 类名称：ToolController 系统工具
@@ -50,7 +57,21 @@ public class ToolController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}
-	
+
+	/**
+	 * osp 开放平台接口测试
+	 * */
+	@RequestMapping(value = "/ospInterfaceTest")
+	public Object ospInterfaceTest() throws UnsupportedEncodingException{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		mv.setViewName("system/tools/sopInterface");
+		mv.addObject("pd", pd);
+		return mv;
+	}
+
+
 	/**
 	 *	接口内部请求
 	 * @param 

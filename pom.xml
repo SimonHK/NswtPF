@@ -319,6 +319,13 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.12</version>
 		</dependency>
+		<dependency>
+			<groupId>com.nswt</groupId>
+			<artifactId>osp</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/osp-1.0.0-SNAPSHOT.jar</systemPath>
+		</dependency>
 		<!-- axis-ant -->
 		<dependency>
 			<groupId>axis-ant</groupId>
